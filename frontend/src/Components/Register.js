@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { API } from "../Constants/api";
 
 function Register() {
   const [name, setName] = useState("");
@@ -17,7 +18,7 @@ function Register() {
       password,
     };
 
-    axios.post("http://localhost:8080/register", data).then((res) => {
+    axios.post(`${API}/register`, data).then((res) => {
       if (res.status === 200) {
         toast.success(res.data.message);
         setTimeout(() => {

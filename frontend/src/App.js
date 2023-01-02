@@ -5,6 +5,7 @@ import Login from "./Components/Login";
 import Register from "./Components/Register";
 import AddPost from "./Components/User/AddPost";
 import UserHeader from "./Components/User/UserHeader";
+import UserProfile from "./Components/User/UserProfile";
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
         />
 
         <Route
-          path="/login"
+          path={"/login"}
           element={
             <>
               <Header />
@@ -30,7 +31,7 @@ function App() {
         />
 
         <Route
-          path="/register"
+          path={"/register"}
           element={
             <>
               <Header />
@@ -52,7 +53,18 @@ function App() {
           path="/user/add"
           element={
             <>
+              <UserHeader />
               <AddPost />
+            </>
+          }
+        />
+
+        <Route
+          path="/user/profile"
+          element={
+            <>
+              <UserHeader />
+              <UserProfile />
             </>
           }
         />

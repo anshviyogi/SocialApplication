@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { API } from "../Constants/api";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -12,7 +13,7 @@ function Login() {
     e.preventDefault();
     const data = { email, password };
 
-    axios.post("http://localhost:8080/login", data).then((res) => {
+    axios.post(`${API}/login`, data).then((res) => {
       console.log(res);
       if (res.status === 203) {
         return toast.warn(res.data.message);

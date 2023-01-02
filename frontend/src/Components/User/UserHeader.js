@@ -12,10 +12,13 @@ function UserHeader() {
     <div className="flex justify-between p-5 shadow-2xl">
       {/* Logo */}
       <div className="text-2xl">
-        <h1>LOGO</h1>
+        <Link to="/user">
+          <h1>LOGO</h1>
+        </Link>
       </div>
 
       <div className="space-x-10 text-2xl">
+        <Link to="/user/profile">Profile</Link>
         <Link to="/user/add">Add</Link>
         <a onClick={logoutHandler} style={{ cursor: "pointer" }}>
           Logout
