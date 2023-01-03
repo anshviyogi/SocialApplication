@@ -21,6 +21,15 @@ const postsSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  imageId: {
+    type: String,
+    required: true,
+  },
+  date: {
+    type: "String",
+    required: true,
+  },
+  likes: [],
 });
 
 const Posts = mongoose.model("Posts", postsSchema);

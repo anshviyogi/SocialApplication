@@ -8,21 +8,33 @@ function AddPost() {
   const [image, setImage] = useState({});
 
   const payloadObj = {
-    file: image?.data,
+    file: image.data,
     caption: caption,
     token: localStorage.getItem("token"),
   };
 
-  console.log(payloadObj);
-
   // On submit
   function submitHandler(e) {
     e.preventDefault();
-    axios.post("http://localhost:5000/file/upload", payloadObj, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    console.log(payloadObj);
+
+    axios
+      .post(`${API}/file/upload`, payloadObj, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        if (res.status === 203) {
+          return toast.warn(res.data.message);
+        }
+
+        if (res.status === 200) {
+          return toast.success(res.data.message);
+        }
+      })
+      .catch((err) => console.log(err));
   }
 
   // Handling the video file

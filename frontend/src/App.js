@@ -4,6 +4,7 @@ import Header from "./Components/Header";
 import Login from "./Components/Login";
 import Register from "./Components/Register";
 import AddPost from "./Components/User/AddPost";
+import InsidePostPage from "./Components/User/InsidePostPage";
 import UserHeader from "./Components/User/UserHeader";
 import UserProfile from "./Components/User/UserProfile";
 
@@ -65,6 +66,16 @@ function App() {
             <>
               <UserHeader />
               <UserProfile />
+            </>
+          }
+        />
+
+        <Route
+          path="/user/profile/:image"
+          element={
+            <>
+              <UserHeader />
+              <InsidePostPage />
             </>
           }
         />

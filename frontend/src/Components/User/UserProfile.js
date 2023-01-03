@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { API } from "../../Constants/api";
+import { Link } from "react-router-dom";
 
 function UserProfile() {
   const [posts, setPosts] = useState([]);
@@ -28,21 +29,26 @@ function UserProfile() {
   console.log(posts);
 
   return (
-    <div>
+    <div className="bg-slate-500">
       <h1 className="text-center font-normal text-4xl mt-5">
         Checkout all your uploaded images here
       </h1>
 
       {/* Images */}
-      <div className="flex flex-col md:flex-row justify-center p-10 gap-4">
+      <div className="flex flex-wrap flex-col md:flex-row md:text-center justify-center p-10 gap-4">
         {posts.map((data, index) => (
-          <div key={index} className="shadow-lg">
+          <Link
+            htmlFor="my-modal"
+            to={`${data.imageId}`}
+            key={index}
+            className="shadow-lg p-2"
+          >
             <img
               className="w-72 h-64 rounded-md"
               src={`${API}/file/image/${data.filename}`}
             />
             <p className="text-2xl text-gray-800">{data.caption}</p>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

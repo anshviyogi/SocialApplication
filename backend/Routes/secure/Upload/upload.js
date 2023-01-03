@@ -11,20 +11,21 @@ const Grid = require("gridfs-stream");
 const path = require("path");
 const crypto = require("crypto");
 const Posts = require("../../../model/Schema/Posts");
-const secure = require("../../../middlewares/secure");
 
 // Saving videos in database
 
-// Mongo
+// Mongo URI
 const mongoURI =
-  "mongodb+srv://ansh:ansh@cluster0.cyzrizt.mongodb.net/?retryWrites=true&w=majority";
+  "mongodb+srv://ansh:ansh@cluster0.cyzrizt.mongodb.net/socialApp?retryWrites=true&w=majority";
 
-// Mongo connection
+// Create mongo connection
 const conn = mongoose.createConnection(mongoURI);
 
 // Init gfs
 let gfs, gridfsBucket;
+
 conn.once("open", () => {
+  // Init stream
   gridfsBucket = new mongoose.mongo.GridFSBucket(conn.db, {
     bucketName: "uploads",
   });
@@ -33,7 +34,7 @@ conn.once("open", () => {
   gfs.collection("uploads");
 });
 
-// Create storage object
+// Create storage engine
 const storage = new GridFsStorage({
   url: mongoURI,
   file: (req, file) => {
@@ -42,12 +43,9 @@ const storage = new GridFsStorage({
         if (err) {
           return reject(err);
         }
-
         const filename = buf.toString("hex") + path.extname(file.originalname);
-        // console.log(file)
         const fileInfo = {
           filename: filename,
-          // Bucket name should be same as collection name
           bucketName: "uploads",
         };
         resolve(fileInfo);
@@ -58,66 +56,64 @@ const storage = new GridFsStorage({
 
 const upload = multer({ storage });
 
-router.post("/upload", (req, res) => {
-  // Image is saved
-  console.log(req.file);
-  console.log(req.body);
-  console.log(req.files);
+// Uploads file to DB
+router.post("/upload", upload.single("file"), async (req, res) => {
+  const tokenData = jwt.verify(req.body.token, process.env.SECRET_KEY);
+  const contentType = req.file.contentType;
 
-  // const tokenData = jwt.verify(req.body.token, process.env.SECRET_KEY);
-  // const contentType = req.file.contentType;
+  const date = new Date();
 
-  // const data = {
-  //   userId: tokenData._id,
-  //   userName: tokenData.name,
-  //   filename: req.file.filename,
-  //   contentType: req.file.contentType,
-  //   caption: req.body.caption,
-  // };
+  const data = {
+    userId: tokenData._id,
+    userName: tokenData.name,
+    filename: req.file.filename,
+    contentType: req.file.contentType,
+    caption: req.body.caption,
+    imageId: req.file.id.toString(),
+    date: `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`,
+  };
 
-  // if (
-  //   contentType === "image/jpg" ||
-  //   contentType === "image/png" ||
-  //   contentType === "image/jpeg"
-  // ) {
-  //   const saveVideo = await new Posts(data);
-  //   saveVideo.save();
-  //   res.status(200).json({
-  //     message: "Images added successfully",
-  //   });
-  //   console.log(`Data saved success`);
-  // } else {
-  //   console.log("Error occured");
-  //   res.status(203).json({
-  //     message: "Error occured !! Please provide a valid image",
-  //   });
-  // }
+  if (
+    contentType === "image/jpg" ||
+    contentType === "image/png" ||
+    contentType === "image/jpeg"
+  ) {
+    const saveVideo = await new Posts(data);
+    saveVideo.save();
+    return res.status(200).json({
+      message: "Images added successfully",
+    });
+  } else {
+    return res.status(203).json({
+      message: "Error occured !! Please provide a valid image",
+    });
+  }
 });
 
 // Get image
-// router.get("/image/:filename", (req, res) => {
-//   gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
-//     if (!file || file.length === 0) {
-//       return res.status(404).json({
-//         message: "No file Found",
-//       });
-//     }
+router.get("/image/:filename", (req, res) => {
+  gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+    // Check if file
+    if (!file || file.length === 0) {
+      return res.status(404).json({
+        err: "No file exists",
+      });
+    }
 
-//     // Check if image
-//     if (
-//       file.contentType === "image/jpg" ||
-//       file.contentType === "image/png" ||
-//       file.contentType === "image/jpeg" ||
-//       file.contentType === "video/mp4"
-//     ) {
-//       const readStream = gridfsBucket.openDownloadStream(file._id);
-//       readStream.pipe(res);
-//     } else {
-//       res.status(404).json({
-//         err: "Not an image",
-//       });
-//     }
-//   });
-// });
+    console.log(file);
+
+    // Check if image
+    if (file.contentType === "image/jpeg" || file.contentType === "image/png") {
+      // Read output to browser
+      const readstream = gridfsBucket.openDownloadStream(file._id);
+      console.log(`Working fine`);
+      readstream.pipe(res);
+    } else {
+      res.status(404).json({
+        err: "Not an image",
+      });
+    }
+  });
+});
 
 module.exports = router;
