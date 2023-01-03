@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { API } from "../Constants/api";
 
 function Login() {
@@ -26,31 +26,46 @@ function Login() {
     });
   }
   return (
-    <form className="text-center" onSubmit={submitHandler}>
-      <h1 className="text-4xl font-mono">Login</h1>
-      <input
-        className="border border-black m-4 w-1/2 p-1 outline-0 rounded-md"
-        placeholder="Email Address"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      {/* <br /> */}
-      <input
-        className="border border-black w-1/2 p-1 outline-0 rounded-md"
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+    <div className="flex h-screen">
+      <div className="hidden items-center justify-center w-[70%] md:flex">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/e/e8/Tesla_logo.png"
+          className="w-96"
+        />
+      </div>
 
-      <br />
+      <form
+        className=" bg-red-400 items-center justify-center flex flex-col w-[100%] md:w-[30%]"
+        onSubmit={submitHandler}
+      >
+        <h1 className="mb-10 -tracking-tighter text-4xl font-semibold">
+          Login
+        </h1>
+        <input
+          type="text"
+          className="mb-5 w-10/12 p-2 rounded-md outline-none"
+          placeholder="john@gmail.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          type="password"
+          className="mb-5 w-10/12 p-2 rounded-md outline-none"
+          placeholder="********"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
-      <button className="bg-neutral-400 w-1/2 rounded-md p-1 mt-3">
-        LOGIN
-      </button>
+        <button className="bg-gray-800 w-10/12 p-2 text-white rounded-md text-xl outline-none">
+          Login
+        </button>
 
+        <Link to="/register" className="outline-none">
+          Register
+        </Link>
+      </form>
       <ToastContainer />
-    </form>
+    </div>
   );
 }
 

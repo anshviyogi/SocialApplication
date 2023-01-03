@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { API } from "../Constants/api";
 
 function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
 
   function submitHandler(e) {
@@ -17,6 +18,10 @@ function Register() {
       email,
       password,
     };
+
+    if (password !== confirmPassword) {
+      return toast.warn("Password and confirm password should be same");
+    }
 
     axios.post(`${API}/register`, data).then((res) => {
       if (res.status === 200) {
@@ -31,38 +36,68 @@ function Register() {
     });
   }
   return (
-    <form className="text-center" onSubmit={submitHandler}>
-      <h1 className="text-4xl font-mono m-5">Register</h1>
-      <input
-        className="border border-black w-1/2 p-1 outline-0 rounded-md"
-        placeholder="Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
+    <div className="flex h-screen">
+      {/* Left Bar */}
+      <div className="hidden items-center justify-center w-[70%] md:flex">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/e/e8/Tesla_logo.png"
+          className="w-96"
+        />
+      </div>
 
-      <input
-        className="border border-black m-4 w-1/2 p-1 outline-0 rounded-md"
-        placeholder="Email Address"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
+      {/* Right bar */}
 
-      <input
-        className="border border-black w-1/2 p-1 outline-0 rounded-md"
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+      <form
+        className=" bg-red-400 items-center justify-center flex flex-col w-[100%] md:w-[30%]"
+        onSubmit={submitHandler}
+      >
+        <h1 className="mb-10 -tracking-tighter text-4xl font-semibold">
+          Register
+        </h1>
 
-      <br />
+        <input
+          type="text"
+          className="mb-5 w-10/12 p-2 rounded-md outline-none"
+          placeholder="John Kyle"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
 
-      <button className="bg-neutral-400 w-1/2 rounded-md p-1 mt-3">
-        Register
-      </button>
+        <input
+          type="email"
+          className="mb-5 w-10/12 p-2 rounded-md outline-none"
+          placeholder="john.kype@yahoo.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
+        <input
+          type="password"
+          className="mb-5 w-10/12 p-2 rounded-md outline-none"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
+        <input
+          type="password"
+          className="mb-5 w-10/12 p-2 rounded-md outline-none"
+          placeholder="Confirm Password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+        />
+
+        <button className="bg-gray-800 w-10/12 p-2 text-white rounded-md text-xl outline-none">
+          Register
+        </button>
+
+        <Link to="/login" className="text-start align-top">
+          Login
+        </Link>
+      </form>
 
       <ToastContainer />
-    </form>
+    </div>
   );
 }
 

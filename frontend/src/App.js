@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./Components/Header";
 import Login from "./Components/Login";
 import Register from "./Components/Register";
+import Testing from "./Components/Testing";
 import AddPost from "./Components/User/AddPost";
 import InsidePostPage from "./Components/User/InsidePostPage";
 import UserHeader from "./Components/User/UserHeader";
@@ -25,7 +26,7 @@ function App() {
           path={"/login"}
           element={
             <>
-              <Header />
+              {/* <Header /> */}
               <Login />
             </>
           }
@@ -35,7 +36,7 @@ function App() {
           path={"/register"}
           element={
             <>
-              <Header />
+              {/* <Header /> */}
               <Register />
             </>
           }
@@ -76,6 +77,15 @@ function App() {
             <>
               <UserHeader />
               <InsidePostPage />
+            </>
+          }
+        />
+
+        <Route
+          path="/test"
+          element={
+            <>
+              <Testing />
             </>
           }
         />
