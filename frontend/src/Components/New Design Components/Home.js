@@ -2,7 +2,7 @@ import React from "react";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { Link } from "react-router-dom";
 
-function Testing() {
+function Home() {
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <img
@@ -23,4 +23,4 @@ function Testing() {
   );
 }
 
-export default Testing;
+export default Home;

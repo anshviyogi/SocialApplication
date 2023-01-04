@@ -14,6 +14,8 @@ const registerSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  following: [],
+  followers: [],
 });
 
 const Register = new mongoose.model("Register", registerSchema);

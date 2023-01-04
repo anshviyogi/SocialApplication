@@ -29,7 +29,7 @@ function UserProfile() {
   console.log(posts);
 
   return (
-    <div className="bg-slate-500">
+    <div className="bg-slate-500 w-[100%]">
       <h1 className="text-center font-normal text-4xl mt-5">
         Checkout all your uploaded images here
       </h1>
@@ -39,12 +39,12 @@ function UserProfile() {
         {posts.map((data, index) => (
           <Link
             htmlFor="my-modal"
-            to={`${data.imageId}`}
+            to={`/user/profile/${data.imageId}`}
             key={index}
             className="shadow-lg p-2"
           >
             <img
-              className="w-72 h-64 rounded-md"
+              className="md:w-96 md:h-64 rounded-md w-[100%] h-2/6"
               src={`${API}/file/image/${data.filename}`}
             />
             <p className="text-2xl text-gray-800">{data.caption}</p>

@@ -48,8 +48,7 @@ function AddPost() {
   };
 
   return (
-    <div className="p-5">
-      <h1 className="text-center text-3xl">Form Data</h1>
+    <div className="p-5 flex items-center justify-center h-screen">
       <form onSubmit={submitHandler} className="shadow-xl p-10 rounded-md">
         {/* Video Input */}
         <label className="text-lg">Choose your image</label>

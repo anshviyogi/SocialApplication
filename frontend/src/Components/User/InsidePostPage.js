@@ -1,16 +1,19 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { API } from "../../Constants/api";
+import swal from "sweetalert";
 
 function InsidePostPage() {
   const [posts, setPosts] = useState([]);
+  const navigate = useNavigate();
   const { image } = useParams();
 
   const data = {
     token: localStorage.getItem("token"),
   };
 
+  // Fetching data
   useEffect(() => {
     axios
       .post(`${API}/user/posts`, data, {
@@ -25,8 +28,25 @@ function InsidePostPage() {
       .catch((err) => console.log(err));
   }, []);
 
-  function deleteHandler(e) {
-    console.log(e);
+  // Delete Posts
+  function deleteHandler(id) {
+    swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this imaginary file!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        axios.delete(`http://localhost:5000/user/posts/delete/${id}`);
+
+        return swal("Post Deleted Successfully", {
+          icon: "success",
+        }).then(() => {
+          navigate("/user/profile");
+        });
+      }
+    });
   }
 
   if (posts.length === 0) return;

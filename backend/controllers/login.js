@@ -4,8 +4,6 @@ const jwt = require("jsonwebtoken");
 const login = async (req, res) => {
   const { email, password } = req.body;
 
-  console.log(req.body);
-
   if (!email || !password) {
     return res.status(203).json({
       message: "Please fill all the fields.",
@@ -21,7 +19,6 @@ const login = async (req, res) => {
     });
   }
 
-  console.log(user);
   const token = jwt.sign(
     { _id: user._id, name: user.name },
     process.env.SECRET_KEY

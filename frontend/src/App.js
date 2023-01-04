@@ -1,13 +1,17 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Header from "./Components/Header";
 import Login from "./Components/Login";
 import Register from "./Components/Register";
 import Testing from "./Components/Testing";
 import AddPost from "./Components/User/AddPost";
 import InsidePostPage from "./Components/User/InsidePostPage";
-import UserHeader from "./Components/User/UserHeader";
-import UserProfile from "./Components/User/UserProfile";
+import UserProfile from "./Components/New Design Components/UserProfile";
+import Header from "./Components/New Design Components/Header";
+import Sidebar from "./Components/New Design Components/Sidebar";
+import DashboardHome from "./Components/New Design Components/DashboardHome";
+import Home from "./Components/New Design Components/Home";
+import Profile from "./Components/New Design Components/Profile";
+import SearchPage from "./Components/New Design Components/SearchPage";
 
 function App() {
   return (
@@ -17,7 +21,7 @@ function App() {
           path="/"
           element={
             <>
-              <Header />
+              <Home />
             </>
           }
         />
@@ -26,7 +30,6 @@ function App() {
           path={"/login"}
           element={
             <>
-              {/* <Header /> */}
               <Login />
             </>
           }
@@ -36,7 +39,6 @@ function App() {
           path={"/register"}
           element={
             <>
-              {/* <Header /> */}
               <Register />
             </>
           }
@@ -46,7 +48,11 @@ function App() {
           path="/user"
           element={
             <>
-              <UserHeader />
+              <Header />
+              <div className="flex">
+                <Sidebar />
+                <DashboardHome />
+              </div>
             </>
           }
         />
@@ -55,8 +61,11 @@ function App() {
           path="/user/add"
           element={
             <>
-              <UserHeader />
-              <AddPost />
+              <Header />
+              <div className="flex">
+                <Sidebar />
+                <AddPost />
+              </div>
             </>
           }
         />
@@ -65,8 +74,21 @@ function App() {
           path="/user/profile"
           element={
             <>
-              <UserHeader />
-              <UserProfile />
+              <Header />
+              <div className="flex w-[80%]">
+                <Sidebar />
+                <UserProfile />
+              </div>
+            </>
+          }
+        />
+
+        <Route
+          path="/profile"
+          element={
+            <>
+              <Header />
+              <Profile />
             </>
           }
         />
@@ -75,8 +97,28 @@ function App() {
           path="/user/profile/:image"
           element={
             <>
-              <UserHeader />
+              <Header />
               <InsidePostPage />
+            </>
+          }
+        />
+
+        <Route
+          path="/user/search"
+          element={
+            <>
+              <Header />
+              <SearchPage />
+            </>
+          }
+        />
+
+        <Route
+          path="/user/search/:id"
+          element={
+            <>
+              <Header />
+              <UserProfile />
             </>
           }
         />

@@ -100,13 +100,10 @@ router.get("/image/:filename", (req, res) => {
       });
     }
 
-    console.log(file);
-
     // Check if image
     if (file.contentType === "image/jpeg" || file.contentType === "image/png") {
       // Read output to browser
       const readstream = gridfsBucket.openDownloadStream(file._id);
-      console.log(`Working fine`);
       readstream.pipe(res);
     } else {
       res.status(404).json({
