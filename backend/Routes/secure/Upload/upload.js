@@ -3,6 +3,8 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 
+// Link: http://localhost:5000/file/{route}
+
 // For saving video
 const multer = require("multer");
 const { GridFsStorage } = require("multer-gridfs-storage");

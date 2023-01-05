@@ -10,7 +10,7 @@ function Profile() {
   const [user, setUser] = useState([]);
 
   const data = {
-    token: localStorage.getItem("token"),
+    id: localStorage.getItem("userId"),
   };
 
   useEffect(() => {

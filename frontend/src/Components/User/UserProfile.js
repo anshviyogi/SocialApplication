@@ -7,26 +7,20 @@ function UserProfile() {
   const [posts, setPosts] = useState([]);
 
   const data = {
-    token: localStorage.getItem("token"),
+    id: localStorage.getItem("userId"),
   };
 
   useEffect(() => {
     axios
-      .post(`${API}/user/posts`, data, {
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      })
+      .post(`${API}/user/posts`, data)
       .then((res) => {
-        console.log(res);
+        console.log("Res >>>", res);
         setPosts(res.data);
       })
       .catch((err) => console.log(err));
   }, []);
 
   if (posts.length === 0) return <h1>Loading...</h1>;
-
-  console.log(posts);
 
   return (
     <div className="bg-slate-500 w-[100%]">

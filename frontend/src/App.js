@@ -5,7 +5,7 @@ import Register from "./Components/Register";
 import Testing from "./Components/Testing";
 import AddPost from "./Components/User/AddPost";
 import InsidePostPage from "./Components/User/InsidePostPage";
-import UserProfile from "./Components/New Design Components/UserProfile";
+import SearchedProfile from "./Components/New Design Components/SearchedProfile";
 import Header from "./Components/New Design Components/Header";
 import Sidebar from "./Components/New Design Components/Sidebar";
 import DashboardHome from "./Components/New Design Components/DashboardHome";
@@ -70,18 +70,18 @@ function App() {
           }
         />
 
-        <Route
+        {/* <Route
           path="/user/profile"
           element={
             <>
               <Header />
               <div className="flex w-[80%]">
                 <Sidebar />
-                <UserProfile />
+                <SearchedProfile />
               </div>
             </>
           }
-        />
+        /> */}
 
         <Route
           path="/profile"
@@ -118,7 +118,7 @@ function App() {
           element={
             <>
               <Header />
-              <UserProfile />
+              <SearchedProfile />
             </>
           }
         />

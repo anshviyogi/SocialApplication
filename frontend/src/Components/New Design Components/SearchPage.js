@@ -13,9 +13,7 @@ function SearchPage() {
     axios.get(`${API}/user/users`).then((data) => setUsers(data.data));
 
     axios
-      .post(`${API}/user/single/user`, {
-        token: localStorage.getItem("token"),
-      })
+      .post(`${API}/user/single/user`, { id: localStorage.getItem("userId") })
       .then((res) => {
         setUser(res.data);
       });
@@ -31,7 +29,7 @@ function SearchPage() {
 
     const obj = {
       followUserId: id,
-      token: localStorage.getItem("token"),
+      id: localStorage.getItem("userId"),
     };
 
     axios.put(`${API}/user/follow`, obj);

@@ -1,10 +1,8 @@
-const jwt = require("jsonwebtoken");
 const Posts = require("../model/Schema/Posts");
 
 const userPosts = async (req, res) => {
-  const token = req.body.token;
-  const userInfo = jwt.verify(token, process.env.SECRET_KEY);
-  const posts = await Posts.find({ userId: userInfo._id });
+  const id = req.body.id;
+  const posts = await Posts.find({ userId: id });
 
   return res.status(200).json(posts);
 };

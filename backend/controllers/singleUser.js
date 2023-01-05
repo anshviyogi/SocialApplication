@@ -1,11 +1,11 @@
-const jwt = require("jsonwebtoken");
 const Register = require("../model/Schema/Register");
 
 const singleUser = async (req, res) => {
-  const { _id } = jwt.verify(req.body.token, process.env.SECRET_KEY);
-  Register.findById(_id, (err, result) => {
+  const { id } = req.body;
+
+  Register.findById(id, (err, result) => {
     if (err) return console.log(err);
-    res.json(result);
+    return res.status(200).json(result);
   });
 };
 
